@@ -1,0 +1,14 @@
+name: Test StackSpot Workflow action
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: engineering-runners-stg
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run a one-line script
+        run: echo Hello, world!
