@@ -2,13 +2,26 @@ name: Test StackSpot Workflow action
 
 on:
   workflow_dispatch:
+    inputs:
+      execution-id:
+        description: "Workflow dispatched execution id"
+        required: true
+      realm:
+        description: "Realm StackSpot"
+        required: true
 
 jobs:
-  build:
-    runs-on: engineering-runners-stg
-
+  stackspot-workflow-bind-scm:
+    runs-on: ubuntu-20.04
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Run Action of Bind
+        uses: ./
+        with:
+          execution-id: "${{ github.event.inputs.execution-id }}"
+          realm: "${{ github.event.inputs.realm }}"
+          client-id: "${{ secrets.CLIENT_ID }}"
+          client-secret: "${{ secrets.CLIENT_SECRET }}"
+
