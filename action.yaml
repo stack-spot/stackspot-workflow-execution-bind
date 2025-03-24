@@ -1,0 +1,11 @@
+name: "StackSpot Workflow Execution Bind"
+description: "StackSpot Workflow"
+author: "StackSpot"
+branding:
+  icon: "truck"
+  color: "purple"
+runs:
+  using: "composite"
+  steps:
+    - run: echo "Hello World"
+      shell: bash
