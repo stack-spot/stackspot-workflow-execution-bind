@@ -4,8 +4,31 @@ author: "StackSpot"
 branding:
   icon: "truck"
   color: "purple"
+inputs:
+  client-id:
+    description: "Client ID StackSpot"
+    required: true
+  client-secret:
+    description: "Client Secret StackSpot"
+    required: true
+  realm:
+    description: "Realm StackSpot"
+    required: true
+  execution-id:
+    description: "Workflow dispatched execution id"
+    required: true
+  idm-base-url:
+    description: "StackSpot IDM base url"
+    required: false
+    default: "https://idm.stackspot.com"
+  workflow-api-base-url:
+    description: "Workflow API base url"
+    required: false
+    default: "https://workflow-api.v1.stackspot.com"
 runs:
   using: "composite"
   steps:
-    - run: echo "Hello World"
+    - run: |
+        chmod +x entrypoint.sh
+        ./entrypoint.sh ${{ inputs.client-id }} ${{ inputs.client-secret }} ${{ inputs.realm }} ${{ inputs.idm-base-url }} ${{ inputs.workflow-api-base-url }} ${{ inputs.execution-id}}
       shell: bash
