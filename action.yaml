@@ -29,6 +29,6 @@ runs:
   using: "composite"
   steps:
     - run: |
-        chmod +x entrypoint.sh
-        ./entrypoint.sh ${{ inputs.client-id }} ${{ inputs.client-secret }} ${{ inputs.realm }} ${{ inputs.idm-base-url }} ${{ inputs.workflow-api-base-url }} ${{ inputs.execution-id}}
+        chmod +x ${{ github.action_path }}/entrypoint.sh
+        ${{ github.action_path }}/entrypoint.sh ${{ inputs.client-id }} ${{ inputs.client-secret }} ${{ inputs.realm }} ${{ inputs.idm-base-url }} ${{ inputs.workflow-api-base-url }} ${{ inputs.execution-id}}
       shell: bash
