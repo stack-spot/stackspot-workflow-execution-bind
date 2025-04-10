@@ -17,6 +17,9 @@ inputs:
   execution-id:
     description: "Workflow dispatched execution id"
     required: true
+  stackspot-workflow-job:
+      description: "Name of StackSpot Workflow Job"
+      required: true
   idm-base-url:
     description: "StackSpot IDM base url"
     required: false
@@ -30,5 +33,5 @@ runs:
   steps:
     - run: |
         chmod +x ${{ github.action_path }}/entrypoint.sh
-        ${{ github.action_path }}/entrypoint.sh ${{ inputs.client-id }} ${{ inputs.client-secret }} ${{ inputs.realm }} ${{ inputs.idm-base-url }} ${{ inputs.workflow-api-base-url }} ${{ inputs.execution-id}}
+        ${{ github.action_path }}/entrypoint.sh ${{ inputs.client-id }} ${{ inputs.client-secret }} ${{ inputs.realm }} ${{ inputs.idm-base-url }} ${{ inputs.workflow-api-base-url }} ${{ inputs.execution-id }} ${{ inputs.stackspot-workflow-job}}
       shell: bash

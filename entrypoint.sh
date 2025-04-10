@@ -6,10 +6,17 @@ realm=${3}
 idm_base_url=${4}
 workflow_api_base_url=${5}
 execution_id=${6}
+stackspot_workflow_job=${7}
 
-export client_id=$client_id
-export client_secret=$client_secret
+if [[ -z "$execution_id" ]]; then
+    echo "'execution_id' is empty."
+    exit 0
+fi
 
+if [[ -z "$stackspot_workflow_job" ]]; then
+    echo "'stackspot_workflow_job' is empty."
+    exit 0
+fi
 
 secret_stk_login=$(curl -s --location --request POST "$idm_base_url/realms/$realm/protocol/openid-connect/token" \
     --header "Content-Type: application/x-www-form-urlencoded" \
@@ -22,12 +29,12 @@ echo "GITHUB RUN ID:" $github_run_id
 
 put_workflow_scm_execution_id_url="$workflow_api_base_url/v1/executions/$execution_id/bind-scm"
 
-echo "Binding the execution id $github_id to workflow with execution id $execution_id"
+echo "Associating the GitHub execution ID '$github_id' to the workflow execution ID '$execution_id', including the job '$stackspot_workflow_job'."
 
 http_code=$(curl -s -o output.json -w '%{http_code}' --request PUT "$put_workflow_scm_execution_id_url" \
     --header "Authorization: Bearer $secret_stk_login" \
     --header 'Content-Type: application/json' \
-    --data "{\"scmWorkflowExecutionId\": \"$github_run_id\"}")
+    --data "{\"scmWorkflowExecutionId\": \"$github_run_id\", \"stackspotWorkflowJob\": \"$stackspot_workflow_job\"}")
 
 if [[ "$http_code" -ne "204" ]]; then
     echo "OOPS! Something went wrong binding the execution id $github_id to workflow with execution id: $execution_id"
