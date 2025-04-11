@@ -9,6 +9,7 @@ This GitHub Action binds the GitHub execution ID to a StackSpot Workflow.
     uses: stack-spot/stackspot-workflow-execution-bind@main
     with:
       execution-id: "${{ github.event.inputs.execution-id }}"
+      stackspot-workflow-job: "${{ github.event.inputs.stackspot-workflow-job }}"
       realm: "${{ vars.REALM }}"
       client-id: "${{ secrets.CLIENT_ID }}"
       client-secret: "${{ secrets.CLIENT_SECRET }}"
