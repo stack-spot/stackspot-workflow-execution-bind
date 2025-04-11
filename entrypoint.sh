@@ -9,12 +9,12 @@ execution_id=${6}
 stackspot_workflow_job=${7}
 
 if [[ -z "$execution_id" ]]; then
-    echo "'execution_id' is empty."
+    echo "'execution_id' is empty. The execution will not be associated. Exiting with status code 0."
     exit 0
 fi
 
 if [[ -z "$stackspot_workflow_job" ]]; then
-    echo "'stackspot_workflow_job' is empty."
+    echo "'stackspot_workflow_job' is empty. The execution will not be associated. Exiting with status code 0."
     exit 0
 fi
 
@@ -29,7 +29,7 @@ echo "GITHUB RUN ID:" $github_run_id
 
 put_workflow_scm_execution_id_url="$workflow_api_base_url/v1/executions/$execution_id/bind-scm"
 
-echo "Associating the GitHub execution ID '$github_id' to the workflow execution ID '$execution_id', including the job '$stackspot_workflow_job'."
+echo "Associating the GitHub execution ID '$github_run_id' to the workflow execution ID '$execution_id', including the job '$stackspot_workflow_job'."
 
 http_code=$(curl -s -o output.json -w '%{http_code}' --request PUT "$put_workflow_scm_execution_id_url" \
     --header "Authorization: Bearer $secret_stk_login" \
