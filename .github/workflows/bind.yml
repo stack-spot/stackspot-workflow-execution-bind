@@ -6,6 +6,9 @@ on:
       execution-id:
         description: "Workflow dispatched execution id"
         required: true
+      stackspot-workflow-job:
+          description: "Name of StackSpot Workflow Job"
+          required: true
       realm:
         description: "Realm StackSpot"
         required: true
@@ -21,6 +24,7 @@ jobs:
         uses: ./
         with:
           execution-id: "${{ github.event.inputs.execution-id }}"
+          stackspot-workflow-job: "${{ github.event.inputs.stackspot-workflow-job }}"
           realm: "${{ github.event.inputs.realm }}"
           client-id: "${{ secrets.CLIENT_ID }}"
           client-secret: "${{ secrets.CLIENT_SECRET }}"
